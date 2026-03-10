@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-slate-950 text-slate-100;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.gradient-bg {
+  background: radial-gradient(circle at 15% 20%, #7c3aed 0%, transparent 45%),
+    radial-gradient(circle at 85% 10%, #0ea5e9 0%, transparent 40%),
+    #020617;
+}
+
+.parallax {
+  transform: translateZ(0);
+  background-attachment: fixed;
+}
