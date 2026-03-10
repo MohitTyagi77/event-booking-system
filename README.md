@@ -140,6 +140,7 @@ npm run dev:client
 ```bash
 cd server
 npm install
+npm test
 npm run dev
 ```
 
@@ -194,3 +195,8 @@ Open: `http://localhost:5173`
 ## Admin API Access
 - Protected admin endpoints require header: `x-admin-key: <ADMIN_API_KEY>`.
 - Frontend Admin Dashboard reads this from `VITE_ADMIN_API_KEY`.
+
+
+## Automated Tests
+- Backend unit tests run with Node test runner: `cd server && npm test`
+- Includes seat lock service behavior checks (lock limits, effective availability, release behavior).

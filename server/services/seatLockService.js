@@ -52,9 +52,8 @@ export const lockSeats = ({ eventId, socketId, quantity, availableSeats }) => {
   }
 
   cleanupExpiredLocks(eventId);
-  const eventLocks = ensureEventMap(eventId);
-
   const lockedByOthers = getLockedSeatsByOthers(eventId, socketId);
+  const eventLocks = ensureEventMap(eventId);
   const seatsLeftForCurrentUser = Number(availableSeats) - lockedByOthers;
   if (safeQty > seatsLeftForCurrentUser) {
     return { ok: false, message: 'Seats are temporarily locked by other users' };
@@ -92,4 +91,9 @@ export const releaseAllLocksForSocket = (socketId) => {
     eventLocks.delete(socketId);
     cleanupExpiredLocks(eventId);
   }
+};
+
+
+export const __resetSeatLocksForTests = () => {
+  locksByEvent.clear();
 };
