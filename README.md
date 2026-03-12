@@ -208,3 +208,9 @@ Open: `http://localhost:5173`
 - ✅ `README.md` with setup, environment, API, and deployment instructions.
 - ✅ MySQL schema script available as `event_booking.sql` (and `schema.sql`).
 - ℹ️ Screenshots/demo video are optional; a sample UI screenshot can be captured by running the frontend and using browser tooling if needed.
+
+
+## Git / Merge Conflict Hygiene
+- Added `.gitignore` to prevent accidental commits of `node_modules`, build artifacts, logs, and local `.env` files.
+- Added `.gitattributes` to enforce LF normalization and stable lockfile diffs.
+- If lockfile merge conflicts occur, prefer regenerating lockfiles with `npm install --prefix server` and `npm install --prefix client` instead of manual conflict edits.

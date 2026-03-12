@@ -1,0 +1,7 @@
+# Normalize line endings for source files
+* text=auto
+
+# Keep lockfiles as text for deterministic diffs
+package-lock.json text eol=lf
+client/package-lock.json text eol=lf
+server/package-lock.json text eol=lf
