@@ -201,3 +201,10 @@ Open: `http://localhost:5173`
 ## Automated Tests
 - Backend unit tests run with Node test runner: `cd server && npm test`
 - Includes seat lock service behavior checks (lock limits, effective availability, release behavior).
+
+
+## Deliverables Checklist
+- ✅ GitHub-ready repository with `client/` (React) and `server/` (Node/Express) folders.
+- ✅ `README.md` with setup, environment, API, and deployment instructions.
+- ✅ MySQL schema script available as `event_booking.sql` (and `schema.sql`).
+- ℹ️ Screenshots/demo video are optional; a sample UI screenshot can be captured by running the frontend and using browser tooling if needed.
