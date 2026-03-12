@@ -74,7 +74,8 @@ event-booking-system
 
 #### Booking APIs
 - `POST /api/bookings` — create booking and update seat availability
-- `GET /api/bookings` — list bookings (admin key required)
+- `GET /api/bookings` — list bookings (admin key required, supports `?event_id=`)
+- `GET /api/bookings/:id` — booking details
 
 #### Realtime WebSocket Events
 - `lockSeat` / `releaseSeat` (client → server) for temporary seat locks

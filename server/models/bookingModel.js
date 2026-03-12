@@ -10,12 +10,30 @@ export const createBooking = async (bookingData, connection = pool) => {
   return result.insertId;
 };
 
-export const getBookings = async () => {
+export const getBookings = async ({ eventId } = {}) => {
+  const params = [];
+  const whereClause = eventId ? 'WHERE b.event_id = ?' : '';
+
+  if (eventId) params.push(eventId);
+
   const [rows] = await pool.execute(
-    `SELECT b.*, e.title AS event_title, e.date AS event_date
+    `SELECT b.*, e.title AS event_title, e.date AS event_date, e.location AS event_location
      FROM bookings b
      JOIN events e ON b.event_id = e.id
-     ORDER BY b.booking_date DESC`
+     ${whereClause}
+     ORDER BY b.booking_date DESC`,
+    params
   );
   return rows;
+};
+
+export const getBookingById = async (bookingId) => {
+  const [rows] = await pool.execute(
+    `SELECT b.*, e.title AS event_title, e.date AS event_date, e.location AS event_location, e.img AS event_img
+     FROM bookings b
+     JOIN events e ON b.event_id = e.id
+     WHERE b.id = ?`,
+    [bookingId]
+  );
+  return rows[0];
 };

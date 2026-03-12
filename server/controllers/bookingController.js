@@ -1,5 +1,5 @@
 import pool from '../config/db.js';
-import { createBooking, getBookings } from '../models/bookingModel.js';
+import { createBooking, getBookingById, getBookings } from '../models/bookingModel.js';
 import { getEventById, getEventByIdForUpdate, updateAvailableSeats } from '../models/eventModel.js';
 import { getLockedSeatsByOthers, releaseSeats } from '../services/seatLockService.js';
 
@@ -100,7 +100,7 @@ export const createBookingHandler = (io) => async (req, res) => {
         // no-op
       }
     }
-    return res.status(500).json({ message: 'Booking failed', error: error.message });
+    return res.status(500).json({ message: 'Booking failed', error: error?.message || String(error) });
   } finally {
     if (connection) {
       connection.release();
@@ -108,11 +108,24 @@ export const createBookingHandler = (io) => async (req, res) => {
   }
 };
 
-export const getBookingsHandler = async (_req, res) => {
+export const getBookingsHandler = async (req, res) => {
   try {
-    const bookings = await getBookings();
+    const eventId = req.query.event_id ? Number(req.query.event_id) : undefined;
+    const bookings = await getBookings({ eventId });
     res.json(bookings);
   } catch (error) {
-    res.status(500).json({ message: 'Failed to fetch bookings', error: error.message });
+    res.status(500).json({ message: 'Failed to fetch bookings', error: error?.message || String(error) });
+  }
+};
+
+export const getBookingByIdHandler = async (req, res) => {
+  try {
+    const booking = await getBookingById(req.params.id);
+    if (!booking) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+    return res.json(booking);
+  } catch (error) {
+    return res.status(500).json({ message: 'Failed to fetch booking', error: error?.message || String(error) });
   }
 };
