@@ -1,5 +1,7 @@
 import { createEvent, deleteEvent, getEventById, getEvents, updateEvent } from '../models/eventModel.js';
 
+const formatError = (error) => error?.message || String(error);
+
 const validateEventPayload = (payload) => {
   const required = ['title', 'description', 'location', 'date', 'total_seats', 'available_seats', 'price'];
   for (const field of required) {
@@ -33,7 +35,7 @@ export const createEventHandler = async (req, res) => {
     const id = await createEvent(req.body);
     res.status(201).json({ message: 'Event created successfully', id });
   } catch (error) {
-    res.status(500).json({ message: 'Failed to create event', error: error.message });
+    res.status(500).json({ message: 'Failed to create event', error: formatError(error) });
   }
 };
 
@@ -42,7 +44,7 @@ export const getEventsHandler = async (req, res) => {
     const events = await getEvents(req.query);
     res.json(events);
   } catch (error) {
-    res.status(500).json({ message: 'Failed to fetch events', error: error.message });
+    res.status(500).json({ message: 'Failed to fetch events', error: formatError(error) });
   }
 };
 
@@ -54,7 +56,7 @@ export const getEventByIdHandler = async (req, res) => {
     }
     res.json(event);
   } catch (error) {
-    res.status(500).json({ message: 'Failed to fetch event', error: error.message });
+    res.status(500).json({ message: 'Failed to fetch event', error: formatError(error) });
   }
 };
 
@@ -71,7 +73,7 @@ export const updateEventHandler = async (req, res) => {
     }
     res.json({ message: 'Event updated successfully' });
   } catch (error) {
-    res.status(500).json({ message: 'Failed to update event', error: error.message });
+    res.status(500).json({ message: 'Failed to update event', error: formatError(error) });
   }
 };
 
@@ -83,6 +85,6 @@ export const deleteEventHandler = async (req, res) => {
     }
     res.json({ message: 'Event deleted successfully' });
   } catch (error) {
-    res.status(500).json({ message: 'Failed to delete event', error: error.message });
+    res.status(500).json({ message: 'Failed to delete event', error: formatError(error) });
   }
 };
